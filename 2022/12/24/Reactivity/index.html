@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html class="appearance-dark" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Reactivity in Javascript</title>
+    <meta name="description" content="Never quit trying until you succeed">
+    <meta name="viewport"
+        content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1">
+    <!-- Google Analytics --><!-- End Google Analytics -->
+    <script type="text/javascript" charset="utf-8" src="//downloads.mailchimp.com/js/signup-forms/popup/unique-methods/73bf20a8fe762dee6abd0173cd576e53d748a0df/popup.js"></script><script async="" src="https://chimpstatic.com/mcjs-connected/js/users/9d8708fb6c94ddee9664f2dd3/50ed4cec6f158cee50a73ed1c.js"></script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-BQFM5VHWYQ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-BQFM5VHWYQ');
+    </script>
+    
+        <script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3627708550834396" crossorigin="anonymous"></script>
+         <script id="mcjs">!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/9d8708fb6c94ddee9664f2dd3/50ed4cec6f158cee50a73ed1c.js");</script>
+    <!-- Baidu Analytics --><!-- End Baidu Analytics -->
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="stylesheet" href="/style/common/bulma.css">
+    <link rel="stylesheet" href="/style/base.css">
+    <link rel="stylesheet" href="/style/common/helper.css">
+    <script src="/js/common.js"></script>
+    <link rel="stylesheet" href="/style/post.css">
+    <link rel="stylesheet" href="/style/themes/highlight-theme-light.css">
+    <link rel="stylesheet" href="/style/common/jquery.fancybox.min.css">
+    <script src="/js/highlight.pack.js"></script>
+    <meta name="description" content="👀 What is Reactivity?It’s the ability of a piece of code to automatically update or re-render in response to changes in the data it is bound to.
+Let’s try to understand clearly by ⏬
+
+Selling Price and Buying Price are two state variables on which the value of Profit depends.
+
+In the case of a Reactive System,
+The profit variable will be updated upon any c..">
+    <meta name="generator" content="Hexo 6.3.0">
+    <link rel="alternate" href="/atom.xml" title="Coding-Bloggers" type="application/atom+xml">
+</head>
+
+<body class="is-flex is-flex-direction-column">
+    <header class="header-widget is-flex-shrink-0 is-hidden-mobile">
+        <div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height">
+            <section class="is-hidden-mobile is-flex-shrink-0">
+                <h2><a href="/">Aditya Tiwari's blog</a></h2>
+            </section>
+            <h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0">
+                <div class="is-full-height" id="postTopic">
+                    <p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">
+                        Reactivity in Javascript</p>
+                    <p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">
+                        Click back to the top</p>
+                </div>
+            </h3>
+            <aside class="is-flex-shrink-0">
+                <h3 class="is-inline-block"><a href="/">Home</a></h3>
+                <h3 class="is-inline-block"><a href="/about">About</a></h3>
+                <h3 class="is-inline-block"><a href="/archives">Archives</a></h3>
+            </aside>
+        </div>
+    </header>
+    <header
+        class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet">
+        <h3 class="is-inline-block"><a href="/">Home</a></h3>
+        <h3 class="is-inline-block"><a href="/about">About</a></h3>
+        <h3 class="is-inline-block"><a href="/archives">Archives</a></h3>
+    </header>
+    <main>
+        <main class="container is-max-widescreen content section post-page pt-4 px-4">
+            <div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse">
+                <div class="column is-3 is-hidden-mobile">
+                    <ol class="toc">
+                        <li class="toc-item toc-level-2"><a class="toc-link"
+                                href="#%F0%9F%91%80-What-is-Reactivity"><span class="toc-text">👀 What is
+                                    Reactivity?</span></a></li>
+                        <li class="toc-item toc-level-2"><a class="toc-link"
+                                href="#%F0%9F%A4%94-Where-is-the-Reactivity-concept-used"><span class="toc-text">🤔
+                                    Where is the Reactivity concept used?</span></a></li>
+                        <li class="toc-item toc-level-2"><a class="toc-link"
+                                href="#%F0%9F%9A%80%F0%9F%9A%80-Let-us-start-building-a-reactive-system"><span
+                                    class="toc-text">🚀🚀 Let us start building a reactive system</span></a>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3"><a class="toc-link"
+                                        href="#Start-with-a-simple-non-reactive-system"><span class="toc-text">Start
+                                            with a simple non-reactive system</span></a></li>
+                                <li class="toc-item toc-level-3"><a class="toc-link"
+                                        href="#Let-us-begin-creating-a-reactive-system"><span class="toc-text">Let us
+                                            begin creating a reactive system</span></a></li>
+                                <li class="toc-item toc-level-3"><a class="toc-link"
+                                        href="#Step-1-Create-a-Dependency-Class"><span class="toc-text">Step 1: Create a
+                                            Dependency Class</span></a></li>
+                                <li class="toc-item toc-level-3"><a class="toc-link"
+                                        href="#Step-2-Play-with-the-getter-and-setter"><span class="toc-text">Step 2:
+                                            Play with the getter and setter</span></a></li>
+                                <li class="toc-item toc-level-3"><a class="toc-link"
+                                        href="#Step-3-Create-a-watch-function-to-make-the-process-a-little-bit-easy"><span
+                                            class="toc-text">Step 3: Create a watch function to make the process a
+                                            little bit easy</span></a></li>
+                                <li class="toc-item toc-level-3"><a class="toc-link" href="#Step-4-Wrap-up"><span
+                                            class="toc-text">Step 4: Wrap up !!!</span></a></li>
+                                <li class="toc-item toc-level-3"><a class="toc-link"
+                                        href="#Congratulations-%F0%9F%8E%89%F0%9F%8E%89"><span
+                                            class="toc-text">Congratulations 🎉🎉</span></a></li>
+                            </ol>
+                        </li>
+                    </ol>
+                </div>
+                <div class="column is-9">
+                    <header class="my-4"><a href="/tags/React"><i class="tag post-item-tag">React</i></a><a
+                            href="/tags/Javascript"><i class="tag post-item-tag">Javascript</i></a></header>
+                    <h1 class="mt-0 mb-1 is-family-serif" id="postTitle">Reactivity in Javascript</h1><time
+                        class="has-text-grey" datetime="2022-12-24T14:38:54.000Z">2022-12-24</time>
+                    <article class="mt-2 post-content">
+                        <h2 id="👀-What-is-Reactivity"><a href="#👀-What-is-Reactivity" class="headerlink"
+                                title="👀 What is Reactivity?"></a><a href="#what-is-reactivity"></a>👀 What is
+                            Reactivity?</h2>
+                        <p>It’s the ability of a piece of code to automatically update or re-render in response to
+                            changes in the data it is bound to.</p>
+                        <p>Let’s try to understand clearly by ⏬</p>
+                        <p><a target="_blank" rel="noopener"
+                                href="https://res.cloudinary.com/practicaldev/image/fetch/s--rMAT4yOY--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/7rrnsxnqe8w5cx6dvp44.png"><img
+                                    src="https://res.cloudinary.com/practicaldev/image/fetch/s--rMAT4yOY--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/7rrnsxnqe8w5cx6dvp44.png"
+                                    alt="Initial State"></a></p>
+                        <p><strong>Selling Price</strong> and <strong>Buying Price</strong> are two state variables on
+                            which the value of Profit depends.</p>
+                        <p><a target="_blank" rel="noopener"
+                                href="https://res.cloudinary.com/practicaldev/image/fetch/s---6rHR5_l--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/5yg7ojuu3o55ko6i4x6w.png"><img
+                                    src="https://res.cloudinary.com/practicaldev/image/fetch/s---6rHR5_l--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/5yg7ojuu3o55ko6i4x6w.png"
+                                    alt="Explanation"></a></p>
+                        <p><strong>In the case of a Reactive System,</strong></p>
+                        <p>The profit variable will be updated upon any changes in <strong>Selling Price</strong> or
+                            <strong>Buying Price</strong>.</p>
+                        <p>In the initial state, Selling price is 500 and Buying Price is 300, So the Profit will be
+                            (500-300) &#x3D; 200.</p>
+                        <p>When we update buying Price to 100, the Profit is recalculated automatically and updated to
+                            (500-100)&#x3D;400</p>
+                        <p><strong>In the case of a non-reactive system,</strong></p>
+                        <p>Upon any changes in <strong>Selling Price</strong> or <strong>Buying Price</strong>, the
+                            profit variable will not be updated until <strong><em>calculateProfit() gets called
+                                    again.</em></strong></p>
+                        <p>So, In the initial state, Selling price is 500 and Buying Price is 300, So the Profit will be
+                            (500-300) &#x3D; 200.</p>
+                        <p>When we update buying Price to 100, the Profit remains the same as before. (500-300) &#x3D;
+                            200</p>
+                        <hr>
+                        <h2 id="🤔-Where-is-the-Reactivity-concept-used"><a
+                                href="#🤔-Where-is-the-Reactivity-concept-used" class="headerlink"
+                                title="🤔 Where is the Reactivity concept used?"></a><a
+                                href="#where-is-the-reactivity-concept-used"></a><strong>🤔 Where is the Reactivity
+                                concept used?</strong></h2>
+                        <p>The reactivity concept is in the ❤️ of all modern frontend frameworks (React, Next.js,
+                            Vue.js, etc.).</p>
+                        <p>Some important parts where this concept and programming practice are used -</p>
+                        <ul>
+                            <li>
+                                <p>useState hook of React.js</p>
+                            </li>
+                            <li>
+                                <p>re-render widgets when some bounded state variable got updated</p>
+                            </li>
+                        </ul>
+                        <hr>
+                        <h2 id="🚀🚀-Let-us-start-building-a-reactive-system"><a
+                                href="#🚀🚀-Let-us-start-building-a-reactive-system" class="headerlink"
+                                title="🚀🚀 Let us start building a reactive system"></a><a
+                                href="#let-us-start-building-a-reactive-system"></a><strong>🚀🚀 Let us start building a
+                                reactive system</strong></h2>
+                        <h3 id="Start-with-a-simple-non-reactive-system"><a
+                                href="#Start-with-a-simple-non-reactive-system" class="headerlink"
+                                title="Start with a simple non-reactive system"></a><a
+                                href="#start-with-a-simple-nonreactive-system"></a><strong>Start with a simple
+                                non-reactive system</strong></h3>
+                        <pre><code>let buyingPrice = 200
+let sellingPrice = 500
+
+let profit;
+
+function calculateProfit()&#123;
+    profit = sellingPrice - buyingPrice
+&#125;
+
+calculateProfit()
+console.log(&quot;Profit : &quot;+profit) // Profit : 300
+
+// Update the selling price
+buyingPrice = 100
+
+// call calculateProfit() to recalculate
+calculateProfit()
+console.log(&quot;Profit : &quot;+profit) // Profit : 400
+</code></pre>
+                        <p>Enter fullscreen mode Exit fullscreen mode</p>
+                        <h3 id="Let-us-begin-creating-a-reactive-system"><a
+                                href="#Let-us-begin-creating-a-reactive-system" class="headerlink"
+                                title="Let us begin creating a reactive system"></a><a
+                                href="#let-us-begin-creating-a-reactive-system"></a><strong>Let us begin creating a
+                                reactive system</strong></h3>
+                        <h3 id="Step-1-Create-a-Dependency-Class"><a href="#Step-1-Create-a-Dependency-Class"
+                                class="headerlink" title="Step 1: Create a Dependency Class"></a><a
+                                href="#step-1-create-a-dependency-class"></a><strong>Step 1: Create a Dependency
+                                Class</strong></h3>
+                        <p>Manage the dependencies, who need to be notified when this data got updated or modified. </p>
+                        <pre><code>class DependancyTracker&#123;
+    constructor()&#123;
+        this.subscribers = []
+    &#125;
+    // Register the function of dependent code
+    depend()&#123;
+        if(target &amp;&amp; this.subscribers.includes(target) !== true)&#123;
+            this.subscribers.push(target);
+        &#125;
+    &#125;
+    // Notify the dependent codes to act on update of this data
+    notify()&#123;
+        for (let i = 0; i &lt; this.subscribers.length; i++) &#123;
+            let func = this.subscribers[i];
+            func(); // run the function
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+                        <p>Enter fullscreen mode Exit fullscreen mode</p>
+                        <p>Let’s see that in action </p>
+                        <pre><code>let track = new DependancyTracker();
+let profit;
+let buyingPrice = 200;
+let sellingPrice = 400;
+
+function calculateProfit()&#123;
+    profit = sellingPrice - buyingPrice
+&#125;
+
+// Register the depndent code
+target = calculateProfit
+track.depend()
+target()
+
+// Initial profit 
+console.log(&quot;Profit : &quot;+profit) // Profit : 200
+
+// Update the selling price
+sellingPrice = 500
+
+// Notify all the dependent codes for re-compute
+track.notify(); 
+// calculateProfit is also an part of the dependent codes.
+
+console.log(&quot;Profit : &quot;+profit) // Profit : 300
+</code></pre>
+                        <p>Enter fullscreen mode Exit fullscreen mode</p>
+                        <h3 id="Step-2-Play-with-the-getter-and-setter"><a
+                                href="#Step-2-Play-with-the-getter-and-setter" class="headerlink"
+                                title="Step 2: Play with the getter and setter"></a><a
+                                href="#step-2-play-with-the-getter-and-setter"></a><strong>Step 2: Play with the getter
+                                and setter</strong></h3>
+                        <p>A dictionary to store initial values </p>
+                        <pre><code>const data = &#123;
+    &quot;buyingPrice&quot; : 200
+&#125;
+</code></pre>
+                        <p>Enter fullscreen mode Exit fullscreen mode</p>
+                        <p>Let’s set getter and setter for the specified key </p>
+                        <pre><code>let internalvalue = data.buyingPrice;
+
+Object.defineProperty(data, &quot;buyingPrice&quot;, &#123;
+    get: function() &#123;
+        console.log(&quot;Get trigerred&quot;);
+        return internalvalue;
+    &#125;,
+    set: function(val) &#123;
+        internalvalue = val;
+        console.log(&quot;Set trigerred&quot;)
+    &#125;
+&#125;)
+</code></pre>
+                        <p>Enter fullscreen mode Exit fullscreen mode</p>
+                        <p>Let’s see that in action </p>
+                        <pre><code>data.buyingPrice=900
+console.log(data.buyingPrice)
+</code></pre>
+                        <p>Enter fullscreen mode Exit fullscreen mode</p>
+                        <p>Output -</p>
+                        <p><a target="_blank" rel="noopener"
+                                href="https://res.cloudinary.com/practicaldev/image/fetch/s--dHdbMbHw--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://cdn.hashnode.com/res/hashnode/image/upload/v1671740146135/c4baa7ea-cd6a-4a6c-a2cf-4f2518415868.png%2520align%3D%2522center%2522"><img
+                                    src="https://res.cloudinary.com/practicaldev/image/fetch/s--dHdbMbHw--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://cdn.hashnode.com/res/hashnode/image/upload/v1671740146135/c4baa7ea-cd6a-4a6c-a2cf-4f2518415868.png%2520align%3D%2522center%2522"></a>
+                        </p>
+                        <h3 id="Step-3-Create-a-watch-function-to-make-the-process-a-little-bit-easy"><a
+                                href="#Step-3-Create-a-watch-function-to-make-the-process-a-little-bit-easy"
+                                class="headerlink"
+                                title="Step 3: Create a watch function to make the process a little bit easy"></a><a
+                                href="#step-3-create-a-watch-function-to-make-the-process-a-little-bit-easy"></a><strong>Step
+                                3: Create a watch function to make the process a little bit easy</strong></h3>
+                        <pre><code>function watch(func)&#123;
+    target = func;
+    target();
+    target = null;
+&#125;
+</code></pre>
+                        <p>Enter fullscreen mode Exit fullscreen mode</p>
+                        <h3 id="Step-4-Wrap-up"><a href="#Step-4-Wrap-up" class="headerlink"
+                                title="Step 4: Wrap up !!!"></a><a href="#step-4-wrap-up-"></a><strong>Step 4: Wrap up
+                                !!!</strong></h3>
+                        <pre><code>const data = &#123;
+    &quot;buyingPrice&quot; : 200,
+    &quot;sellingPrice&quot;: 400
+&#125;
+
+let target = null;
+
+class DependancyTracker&#123;
+    constructor()&#123;
+        this.subscribers = []
+    &#125;
+    depend()&#123;
+        if(target &amp;&amp; this.subscribers.includes(target) !== true)&#123;
+            this.subscribers.push(target);
+        &#125;
+    &#125;
+    notify()&#123;
+        for (let i = 0; i &lt; this.subscribers.length; i++) &#123;
+            this.subscribers[i]();
+        &#125;
+    &#125;
+&#125;
+
+Object.keys(data).forEach(key =&gt; &#123;
+    let internal = data[key];
+    let dep = new DependancyTracker()
+
+    Object.defineProperty(data, key, &#123;
+        get: function() &#123;
+            dep.depend(); // link target function
+            return internal;
+        &#125;,
+        set: function(val) &#123;
+            internal = val; // set value
+            dep.notify(); // notify dependent variables linked funtion
+        &#125;
+    &#125;)
+
+&#125;)
+
+// Watch function
+function watch(func)&#123;
+    target = func;
+    target();
+    target = null;
+&#125;
+
+// Link calculateProfit function in watch
+watch(() =&gt; &#123;
+    data.profit = data.sellingPrice - data.buyingPrice
+&#125;)
+
+console.log(&quot;Profit : &quot;+data.profit) // Profit : 200
+
+data.sellingPrice = 700
+console.log(&quot;Profit : &quot;+data.profit) // Profit : 500
+
+data.sellingPrice = 900
+console.log(&quot;Profit : &quot;+data.profit) // Profit : 700
+</code></pre>
+                        <p>Enter fullscreen mode Exit fullscreen mode</p>
+                        <h3 id="Congratulations-🎉🎉"><a href="#Congratulations-🎉🎉" class="headerlink"
+                                title="Congratulations 🎉🎉"></a><a href="#congratulations"></a><strong>Congratulations
+                                🎉🎉</strong></h3>
+                        <p>You may have gained an amazing concept from this blog. If you like it, please share it with
+                            your friends.</p>
+                    </article>
+                    <section class="jump-container is-flex is-justify-content-space-between my-6">
+                        <!-- em is empty placeholder--><em></em><a class="button is-default" href="/2022/12/23/goat/"
+                            title="Who is the GOAT? 🔮 Vercel Edge Config stores my answer"><span
+                                class="has-text-weight-semibold">Next: Who is the GOAT? 🔮 Vercel Edge Config stores my
+                                answer</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section>
+                    <article class="mt-6 comment-container">
+                        <script async repo="Phantasm0009/lol" src="https://utteranc.es/client.js" issue-term="pathname"
+                            theme="preferred-color-scheme"></script>
+                    </article>
+                </div>
+            </div>
+        </main>
+    </main>
+    <footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif">
+        <section class="sns-container"><a title="twitter" target="_blank" rel="noopener nofollow"
+                href="//twitter.com/Phantasm0006"><i class="iconfont icon-twitter"></i></a><!-- Github--><a
+                title="github" target="_blank" rel="noopener nofollow" href="//github.com/Phantasm0009"><i
+                    class="iconfont icon-github"></i></a><!-- Ins--><a title="instagram" target="_blank"
+                rel="noopener nofollow" href="//www.instagram.com//aditya_14_tiwari"><i
+                    class="iconfont icon-ins"></i></a><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section>
+        <p><span>Copyright ©</span><span> Aditya Tiwari 2022</span></p>
+        <div class="is-flex is-justify-content-center is-flex-wrap-wrap">
+            <p>Powered by Hexo &verbar;&nbsp;</p>
+            <p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener"
+                    href="//github.com/haojen">Theme by Haojen&nbsp;</a></p>
+            <div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener"
+                    href="https://github.com/haojen/hexo-theme-Claudia"
+                    data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a>
+            </div>
+        </div>
+        <div><span>I love myself</span></div>
+    </footer>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script src="/js/jquery-3.6.1.min.js"></script>
+    <script src="/js/jquery-fancybox.min.js"></script>
+    <script src="/js/img_zoom.js"></script>
+    <script src="/js/post.js"></script>
+</body>
+
+</html>
